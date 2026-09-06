@@ -1,0 +1,31 @@
+# .cursorrules — Module 09: Cross-Chain Bridge & Message Relay
+
+## MODULE OVERVIEW
+Focus on building a secure, cross-chain token bridge and message relayer supporting ECDSA cryptographic proof verification, EIP-712 domain separation against cross-chain replay attacks, and lock/burn + mint/unlock token bridging mechanics using Foundry and Solidity 0.8.24.
+
+---
+
+## 1. TECHNICAL CONSTRAINTS & STACK
+
+- **Compiler Version:** Strictly `pragma solidity 0.8.24;` (no floating pragmas).
+- **Tooling:** Foundry (`forge` for unit testing, cryptographic signature tests, and fuzzing).
+- **Crypto Standards:** ECDSA signature recovery using OpenZeppelin `ECDSA` / `SignatureChecker` and `EIP712` typed data hashing.
+- **Nonce Management:** Track nonces per user and per source chain ID (`mapping(uint256 => mapping(uint256 => bool)) processedNonces`).
+
+---
+
+## 2. CODING & SECURITY RULES
+
+- **Cross-Chain Replay Guard:** Include explicit `sourceChainId`, `destinationChainId`, `nonce`, and target contract address inside the hashed message struct.
+- **Relayer Validation:** Enforce strict threshold signature verification (e.g., multisig or designated relayer set verification) before triggering `mint` or `unlock` calls.
+- **Custom Errors:** Replace `require` strings with custom errors (`error InvalidSignature()`, `error NonceAlreadyUsed()`, `error InvalidChainId()`, `error ExecutionFailed()`).
+- **Reentrancy Protection:** Apply `ReentrancyGuard` or CEI pattern on all deposit, burn, and release routines.
+
+---
+
+## 3. TESTING REQUIREMENTS
+
+- **Foundry Unit Tests:** Test end-to-end deposit -> signature generation (`vm.sign`) -> relay execution on target bridge.
+- **Replay Attack Tests:** Assert that attempting to replay a valid signature on a different chain ID or reusing a nonce explicitly reverts.
+- **Invalid Signature Tests:** Verify that tampered payloads, incorrect signers, or malformed v/r/s values are rejected.
+- **Fuzzing Tests:** Fuzz transfer amounts, chain IDs, and nonces using `bound()`.
