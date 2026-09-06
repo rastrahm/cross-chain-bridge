@@ -62,7 +62,7 @@ abstract contract EIP712BridgeHelper is Test {
      * @return digest Hash a firmar.
      */
     function _digest(address verifyingContract, BridgeMessage memory message) internal view returns (bytes32) {
-        return keccak256(abi.encodePacked("\x19\x01", _domainSeparator(verifyingContract), BridgeHash.hash(message)));
+        return keccak256(abi.encodePacked("\x19\x01", _domainSeparator(verifyingContract), BridgeHash.hashMemory(message)));
     }
 
     /**
@@ -73,7 +73,7 @@ abstract contract EIP712BridgeHelper is Test {
      */
     function _relayDigest(address verifyingContract, RelayMessage memory message) internal view returns (bytes32) {
         return keccak256(
-            abi.encodePacked("\x19\x01", _relayDomainSeparator(verifyingContract), BridgeHash.hash(message))
+            abi.encodePacked("\x19\x01", _relayDomainSeparator(verifyingContract), BridgeHash.hashMemory(message))
         );
     }
 

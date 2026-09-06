@@ -7,7 +7,7 @@ import {RelayMessage} from "../interfaces/IMessageRelay.sol";
 /**
  * @title BridgeHash
  * @notice TYPEHASH y `structHash` EIP-712 para mensajes del puente y del relé.
- * @dev Sin storage. El digest final lo completa el contrato vía `_hashTypedDataV4`.
+ * @dev Overloads `calldata` evitan copia a memory en `release` / `execute`.
  */
 library BridgeHash {
     /// @dev keccak256("BridgeMessage(uint256 sourceChainId,uint256 destinationChainId,uint256 nonce,address target,address recipient,address token,uint256 amount)")
@@ -21,11 +21,9 @@ library BridgeHash {
     );
 
     /**
-     * @notice Hash del struct `BridgeMessage` (sin domain separator).
-     * @param message Payload del puente.
-     * @return structHash Compatible con EIP-712.
+     * @notice Hash del struct `BridgeMessage` desde calldata (hot path `release`).
      */
-    function hash(BridgeMessage memory message) internal pure returns (bytes32) {
+    function hash(BridgeMessage calldata message) internal pure returns (bytes32 digest) {
         return keccak256(
             abi.encode(
                 BRIDGE_MESSAGE_TYPEHASH,
@@ -41,11 +39,43 @@ library BridgeHash {
     }
 
     /**
-     * @notice Hash del struct `RelayMessage` (sin domain separator).
-     * @param message Payload del relé.
-     * @return structHash Compatible con EIP-712 (`payload` hasheado como `bytes`).
+     * @notice Hash del struct `BridgeMessage` desde memory (tests / helpers).
      */
-    function hash(RelayMessage memory message) internal pure returns (bytes32) {
+    function hashMemory(BridgeMessage memory message) internal pure returns (bytes32) {
+        return keccak256(
+            abi.encode(
+                BRIDGE_MESSAGE_TYPEHASH,
+                message.sourceChainId,
+                message.destinationChainId,
+                message.nonce,
+                message.target,
+                message.recipient,
+                message.token,
+                message.amount
+            )
+        );
+    }
+
+    /**
+     * @notice Hash del struct `RelayMessage` desde calldata (hot path `execute`).
+     */
+    function hash(RelayMessage calldata message) internal pure returns (bytes32) {
+        return keccak256(
+            abi.encode(
+                RELAY_MESSAGE_TYPEHASH,
+                message.sourceChainId,
+                message.destinationChainId,
+                message.nonce,
+                message.target,
+                keccak256(message.payload)
+            )
+        );
+    }
+
+    /**
+     * @notice Hash del struct `RelayMessage` desde memory (tests / helpers).
+     */
+    function hashMemory(RelayMessage memory message) internal pure returns (bytes32) {
         return keccak256(
             abi.encode(
                 RELAY_MESSAGE_TYPEHASH,

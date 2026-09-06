@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–7** ✅ (fuzz + attack + SWC-AUDIT). Fase 8 pendiente de autorización.
+**Estado:** Fases **0–8** ✅ — módulo cerrado (gas + NatSpec + Deploy + optimización).
 
 ## 1. Objetivo del proyecto
 
@@ -228,7 +228,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 | **5** | Firmas inválidas / tamper / v,r,s malformados | ✅ |
 | **6** | Umbral N-of-M + `MessageRelay.execute` | ✅ |
 | **7** | Fuzz amounts, chainIds, nonces (`bound`) + SWC/attack | ✅ |
-| **8** | Gas snapshot + NatSpec + `Deploy.s.sol` | ⬜ |
+| **8** | Gas snapshot + NatSpec + `Deploy.s.sol` + optimización | ✅ |
 
 ---
 
@@ -259,8 +259,11 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 - [x] Test e2e con `vm.sign`
 - [x] Tests de replay y firma inválida con `vm.expectRevert`
 - [x] Fuzz de amounts, chain IDs y nonces
-- [ ] NatSpec en funciones public/external
+- [x] NatSpec en funciones public/external
 - [x] CEI + SafeERC20; sin `transfer`/`send` de ETH
+- [x] Gas baseline (`doc/GAS.md` + `.gas-snapshot`)
+- [x] `script/Deploy.s.sol` para Anvil
+- [x] Suite SWC / `test/attack/` + fuzz ≥ 1000
 
 ---
 
@@ -272,6 +275,7 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 | [diagrama-flujo.md](./diagrama-flujo.md) | Secuencia lock/burn → firma → mint/unlock |
 | [flujograma.md](./flujograma.md) | Operativo, anti-replay, TDD |
 | [SWC-AUDIT.md](./SWC-AUDIT.md) | Matriz SWC-100–136 + mapeo a tests |
+| [GAS.md](./GAS.md) | Baseline gas, optimizaciones, snapshot |
 
 ---
 
