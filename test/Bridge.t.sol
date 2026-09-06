@@ -144,4 +144,46 @@ contract BridgeTest is EIP712BridgeHelper {
         assertEq(bridgeToken.balanceOf(recipient), AMOUNT);
         assertTrue(bridge.processedNonces(SOURCE_CHAIN_ID, nonce));
     }
+
+    // -------------------------------------------------------------------------
+    // Umbral N-of-M (fase 6)
+    // -------------------------------------------------------------------------
+
+    /**
+     * @notice Release con umbral 2 y dos relayers distintos acuñan el wrapped.
+     */
+    function test_release_successWithThreshold2of2() public {
+        uint256 destChainId = 31_337;
+        uint256 relayer2Pk = 0xB0B;
+        address relayer2 = vm.addr(relayer2Pk);
+
+        bridge.setRelayer(relayer2, true);
+        bridge.setRelayerThreshold(2);
+
+        vm.startPrank(user);
+        underlying.approve(address(bridge), AMOUNT);
+        bridge.deposit(address(underlying), AMOUNT, destChainId, recipient);
+        vm.stopPrank();
+
+        vm.chainId(destChainId);
+
+        BridgeMessage memory message = BridgeMessage({
+            sourceChainId: SOURCE_CHAIN_ID,
+            destinationChainId: destChainId,
+            nonce: 0,
+            target: address(bridge),
+            recipient: recipient,
+            token: address(bridgeToken),
+            amount: AMOUNT
+        });
+
+        bytes[] memory signatures = new bytes[](2);
+        signatures[0] = _signBridgeMessage(RELAYER_PK, address(bridge), message);
+        signatures[1] = _signBridgeMessage(relayer2Pk, address(bridge), message);
+
+        bridge.release(message, signatures);
+
+        assertEq(bridgeToken.balanceOf(recipient), AMOUNT);
+        assertTrue(bridge.processedNonces(SOURCE_CHAIN_ID, 0));
+    }
 }
