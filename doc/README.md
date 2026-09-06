@@ -9,7 +9,8 @@
 | [diagrama-flujo.md](./diagrama-flujo.md) | Flujos lock/burn → firma → mint/unlock |
 | [flujograma.md](./flujograma.md) | Operativo, anti-replay, pipeline TDD |
 
-**Estado:** Fase **0** — documentación (pendiente scaffold Foundry).
+**Estado:** Fase **0** ✅ (scaffold + interfaces). Pendiente autorización fase 1.
 
-**Contratos previstos:** `Bridge` · `BridgeToken` · `MessageRelay` · librería EIP-712  
+**Entregado en fase 0:** `IBridge` · `IMessageRelay` · `IBridgeToken` · `BridgeHash` · `MockERC20`  
+**Pendiente:** `Bridge` · `BridgeToken` · `MessageRelay` · tests  
 **Estándar crypto:** ECDSA + EIP-712 · **Tests:** unit, replay, firmas inválidas, fuzz
