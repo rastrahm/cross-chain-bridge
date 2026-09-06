@@ -9,8 +9,7 @@ import {EIP712BridgeHelper} from "./helpers/EIP712BridgeHelper.sol";
 
 /**
  * @title BridgeTest
- * @notice Deposit (fase 2 ✅) + digest EIP-712 + release e2e (fase 3).
- * @dev `release` aún stub → `test_release_e2e_depositSignMint` falla con `ExecutionFailed` hasta fase 3.
+ * @notice Deposit, digest EIP-712 y release e2e (fases 1–3 ✅).
  */
 contract BridgeTest is EIP712BridgeHelper {
     uint256 internal constant RELAYER_PK = 0xA11CE;

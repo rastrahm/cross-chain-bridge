@@ -9,8 +9,8 @@
 | [diagrama-flujo.md](./diagrama-flujo.md) | Flujos lock/burn → firma → mint/unlock |
 | [flujograma.md](./flujograma.md) | Operativo, anti-replay, pipeline TDD |
 
-**Estado:** Fases **0–2** ✅. Pendiente autorización fase 3 (`release` + `vm.sign`).
+**Estado:** Fases **0–3** ✅. Pendiente autorización fase 4 (replay).
 
-**Contratos:** `Bridge` (deposit) · `BridgeToken` · `BridgeHash` · `MockERC20`  
-**Tests:** `forge test` → **7 PASS**, 1 FAIL esperado (`test_release_e2e` stub `ExecutionFailed`)  
+**Contratos:** `Bridge` (deposit + release) · `BridgeToken` · `BridgeHash`  
+**Tests:** `forge test` → **8 PASS**  
 **Estándar crypto:** ECDSA + EIP-712
