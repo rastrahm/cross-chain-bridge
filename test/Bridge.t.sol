@@ -9,14 +9,8 @@ import {EIP712BridgeHelper} from "./helpers/EIP712BridgeHelper.sol";
 
 /**
  * @title BridgeTest
- * @notice Fase 1 (TDD rojo): deposit emite evento, digest EIP-712 y release feliz.
- * @dev Requiere `Bridge` + `BridgeToken` (fases 2–3). Hasta entonces `forge test` no compila este archivo.
- *
- * Contrato esperado:
- * - `new Bridge(address initialRelayer, uint256 threshold)` despliega `BridgeToken` interno
- *   con dominio EIP-712 `("CrossChainBridge", "1")`.
- * - `deposit` bloquea ERC-20 underlying y emite `Deposit` con nonce monotónico.
- * - `release` verifica firmas, marca nonce y hace mint de `bridgeToken` al `recipient`.
+ * @notice Deposit (fase 2 ✅) + digest EIP-712 + release e2e (fase 3).
+ * @dev `release` aún stub → `test_release_e2e_depositSignMint` falla con `ExecutionFailed` hasta fase 3.
  */
 contract BridgeTest is EIP712BridgeHelper {
     uint256 internal constant RELAYER_PK = 0xA11CE;

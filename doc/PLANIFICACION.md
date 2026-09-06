@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–1** ✅ (scaffold + tests TDD rojos). Fases 2–8 pendientes de autorización.
+**Estado:** Fases **0–2** ✅ (`BridgeToken` + `deposit`). Fase 3 (`release`) pendiente de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -222,7 +222,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 |------|------------|--------|
 | **0** | Docs (`doc/`) + scaffold Foundry + interfaces | ✅ |
 | **1** | Tests failing: deposit evento, hash EIP-712, release feliz | ✅ |
-| **2** | `BridgeToken` + `Bridge.deposit` / lock mínimo | ⬜ |
+| **2** | `BridgeToken` + `Bridge.deposit` / lock mínimo | ✅ |
 | **3** | `release` con 1 relayer + `vm.sign` e2e | ⬜ |
 | **4** | Replay: mismo nonce / otro `chainId` → revert | ⬜ |
 | **5** | Firmas inválidas / tamper / v,r,s malformados | ⬜ |
