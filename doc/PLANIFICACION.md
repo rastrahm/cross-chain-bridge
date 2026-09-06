@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–3** ✅ (`release` e2e con `vm.sign`). Fases 4–8 pendientes de autorización.
+**Estado:** Fases **0–4** ✅ (anti-replay). Fases 5–8 pendientes de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -224,7 +224,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 | **1** | Tests failing: deposit evento, hash EIP-712, release feliz | ✅ |
 | **2** | `BridgeToken` + `Bridge.deposit` / lock mínimo | ✅ |
 | **3** | `release` con 1 relayer + `vm.sign` e2e | ✅ |
-| **4** | Replay: mismo nonce / otro `chainId` → revert | ⬜ |
+| **4** | Replay: mismo nonce / otro `chainId` → revert | ✅ |
 | **5** | Firmas inválidas / tamper / v,r,s malformados | ⬜ |
 | **6** | Umbral N-of-M + `MessageRelay.execute` | ⬜ |
 | **7** | Fuzz amounts, chainIds, nonces (`bound`) | ⬜ |
@@ -253,7 +253,7 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 - [x] Struct de mensaje incluye `sourceChainId`, `destinationChainId`, `nonce`, `target`
 - [x] EIP-712 + ECDSA con OZ; dominio ligado a contrato destino
 - [x] `processedNonces[sourceChainId][nonce]` impide doble gasto
-- [ ] Custom errors: `InvalidSignature`, `NonceAlreadyUsed`, `InvalidChainId`, `ExecutionFailed`
+- [x] Custom errors: `InvalidSignature`, `NonceAlreadyUsed`, `InvalidChainId`, `ExecutionFailed`
 - [x] Umbral de relayers antes de mint/unlock
 - [x] `ReentrancyGuard` / CEI en deposit, burn, release
 - [x] Test e2e con `vm.sign`
