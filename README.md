@@ -2,7 +2,7 @@
 
 Puente de tokens cross-chain y relé de mensajes con pruebas **ECDSA + EIP-712**, anti-replay y nonces. Solidity `0.8.24` + Foundry.
 
-**Estado:** Fases **0–1** ✅ (scaffold + tests TDD rojos). Fases 2–8 pendientes de autorización.
+**Estado:** Fases **0–2** ✅ (`BridgeToken` + `deposit`). Fases 3–8 pendientes de autorización.
 
 ---
 
@@ -52,16 +52,11 @@ src/
 └── mocks/          MockERC20
 ```
 
-Contratos `Bridge`, `BridgeToken` y `MessageRelay` entran desde la fase 2–3 (TDD).
+Contratos `Bridge` (deposit) y `BridgeToken` en fase 2. `release` / `MessageRelay` desde fase 3+.
 
-### Fase 1 — tests (rojo)
-
-| Archivo | Estado |
-|---------|--------|
-| `test/BridgeHash.t.sol` | 4 PASS (structHash EIP-712) |
-| `test/Bridge.t.sol` | Rojo: falta `Bridge` / `BridgeToken` |
-| `test/helpers/EIP712BridgeHelper.sol` | Domain + `vm.sign` |
+### Tests
 
 ```shell
-forge test   # Error: Source "src/Bridge.sol" not found  ← esperado hasta fase 2–3
+forge test
+# 7 PASS · 1 FAIL esperado: test_release_e2e_depositSignMint (stub ExecutionFailed hasta fase 3)
 ```
