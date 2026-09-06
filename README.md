@@ -2,7 +2,7 @@
 
 Puente de tokens cross-chain y relé de mensajes con pruebas **ECDSA + EIP-712**, anti-replay y nonces. Solidity `0.8.24` + Foundry.
 
-**Estado:** Fases **0–4** ✅ (anti-replay). Fases 5–8 pendientes de autorización.
+**Estado:** Fases **0–5** ✅ (firmas inválidas). Fases 6–8 pendientes de autorización.
 
 ---
 
@@ -56,5 +56,5 @@ src/
 
 ```shell
 forge test
-# 12 PASS (Bridge + BridgeHash + Replay)
+# 21 PASS (Bridge + BridgeHash + Replay + InvalidSignature)
 ```
