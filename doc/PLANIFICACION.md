@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fase **0** — documentación. Scaffold Foundry e implementación pendientes.
+**Estado:** Fase **0** ✅ (docs + scaffold Foundry + interfaces). Fases 1–8 pendientes de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -220,7 +220,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 
 | Fase | Entregable | Estado |
 |------|------------|--------|
-| **0** | Docs (`doc/`) + scaffold Foundry + interfaces | 🔄 docs listos |
+| **0** | Docs (`doc/`) + scaffold Foundry + interfaces | ✅ |
 | **1** | Tests failing: deposit evento, hash EIP-712, release feliz | ⬜ |
 | **2** | `BridgeToken` + `Bridge.deposit` / lock mínimo | ⬜ |
 | **3** | `release` con 1 relayer + `vm.sign` e2e | ⬜ |
@@ -249,8 +249,8 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 
 ## 10. Criterios de aceptación
 
-- [ ] Scaffold Foundry (`0.8.24`, fuzz ≥ 1000)
-- [ ] Struct de mensaje incluye `sourceChainId`, `destinationChainId`, `nonce`, `target`
+- [x] Scaffold Foundry (`0.8.24`, fuzz ≥ 1000)
+- [x] Struct de mensaje incluye `sourceChainId`, `destinationChainId`, `nonce`, `target`
 - [ ] EIP-712 + ECDSA con OZ; dominio ligado a contrato destino
 - [ ] `processedNonces[sourceChainId][nonce]` impide doble gasto
 - [ ] Custom errors: `InvalidSignature`, `NonceAlreadyUsed`, `InvalidChainId`, `ExecutionFailed`
