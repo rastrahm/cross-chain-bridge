@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–6** ✅ (N-of-M + MessageRelay). Fases 7–8 pendientes de autorización.
+**Estado:** Fases **0–7** ✅ (fuzz + attack + SWC-AUDIT). Fase 8 pendiente de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -227,7 +227,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 | **4** | Replay: mismo nonce / otro `chainId` → revert | ✅ |
 | **5** | Firmas inválidas / tamper / v,r,s malformados | ✅ |
 | **6** | Umbral N-of-M + `MessageRelay.execute` | ✅ |
-| **7** | Fuzz amounts, chainIds, nonces (`bound`) | ⬜ |
+| **7** | Fuzz amounts, chainIds, nonces (`bound`) + SWC/attack | ✅ |
 | **8** | Gas snapshot + NatSpec + `Deploy.s.sol` | ⬜ |
 
 ---
@@ -258,9 +258,9 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 - [x] `ReentrancyGuard` / CEI en deposit, burn, release
 - [x] Test e2e con `vm.sign`
 - [x] Tests de replay y firma inválida con `vm.expectRevert`
-- [ ] Fuzz de amounts, chain IDs y nonces
+- [x] Fuzz de amounts, chain IDs y nonces
 - [ ] NatSpec en funciones public/external
-- [ ] CEI + SafeERC20; sin `transfer`/`send` de ETH
+- [x] CEI + SafeERC20; sin `transfer`/`send` de ETH
 
 ---
 
@@ -271,6 +271,7 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 | [diagrama-clases.md](./diagrama-clases.md) | UML contratos, interfaces, tests |
 | [diagrama-flujo.md](./diagrama-flujo.md) | Secuencia lock/burn → firma → mint/unlock |
 | [flujograma.md](./flujograma.md) | Operativo, anti-replay, TDD |
+| [SWC-AUDIT.md](./SWC-AUDIT.md) | Matriz SWC-100–136 + mapeo a tests |
 
 ---
 
