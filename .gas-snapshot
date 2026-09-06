@@ -1,0 +1,6 @@
+BridgeGasTest:testGas_burn() (gas: 144631)
+BridgeGasTest:testGas_deposit() (gas: 77320)
+BridgeGasTest:testGas_execute_relay() (gas: 78700)
+BridgeGasTest:testGas_processedNonces_view() (gas: 7957)
+BridgeGasTest:testGas_release_mint() (gas: 169967)
+BridgeGasTest:testGas_release_secondNonce_warmBitmap() (gas: 196620)

@@ -186,4 +186,106 @@ contract BridgeTest is EIP712BridgeHelper {
         assertEq(bridgeToken.balanceOf(recipient), AMOUNT);
         assertTrue(bridge.processedNonces(SOURCE_CHAIN_ID, 0));
     }
+
+    // -------------------------------------------------------------------------
+    // Burn → unlock
+    // -------------------------------------------------------------------------
+
+    /**
+     * @notice `burn` con amount 0 revierte `ZeroAmount`.
+     */
+    function test_burn_revertsZeroAmount() public {
+        vm.expectRevert(IBridge.ZeroAmount.selector);
+        bridge.burn(0, 31_337, recipient);
+    }
+
+    /**
+     * @notice `burn` con dest == chain actual revierte `InvalidChainId`.
+     */
+    function test_burn_revertsSameChainId() public {
+        // Necesita balance de wrapped: mint vía deposit+release primero.
+        _lockAndMintTo(recipient, AMOUNT);
+
+        vm.chainId(31_337);
+        vm.prank(recipient);
+        vm.expectRevert(IBridge.InvalidChainId.selector);
+        bridge.burn({amount: AMOUNT, destinationChainId: 31_337, recipient: user});
+    }
+
+    /**
+     * @notice E2E: lock→mint → burn wrapped → unlock underlying en la cadena origen.
+     */
+    function test_burn_e2e_unlockUnderlying() public {
+        uint256 destChainId = 31_337;
+
+        // 1) Lock en origen + mint wrapped en destino.
+        _lockAndMintTo(recipient, AMOUNT);
+        assertEq(bridgeToken.balanceOf(recipient), AMOUNT);
+        assertEq(underlying.balanceOf(address(bridge)), AMOUNT);
+
+        // 2) Burn wrapped en destino (chain 31337) hacia origen (chain 1).
+        vm.chainId(destChainId);
+        uint256 burnNonce = bridge.nextDepositNonce();
+
+        vm.startPrank(recipient);
+        vm.expectEmit(true, false, false, true, address(bridge));
+        emit IBridge.Burn(recipient, AMOUNT, SOURCE_CHAIN_ID, user, burnNonce);
+        bridge.burn(AMOUNT, SOURCE_CHAIN_ID, user);
+        vm.stopPrank();
+
+        assertEq(bridgeToken.balanceOf(recipient), 0);
+        assertEq(bridge.nextDepositNonce(), burnNonce + 1);
+
+        // 3) Unlock underlying en origen.
+        vm.chainId(SOURCE_CHAIN_ID);
+
+        BridgeMessage memory unlockMsg = BridgeMessage({
+            sourceChainId: destChainId,
+            destinationChainId: SOURCE_CHAIN_ID,
+            nonce: burnNonce,
+            target: address(bridge),
+            recipient: user,
+            token: address(underlying),
+            amount: AMOUNT
+        });
+
+        bytes[] memory signatures = new bytes[](1);
+        signatures[0] = _signBridgeMessage(RELAYER_PK, address(bridge), unlockMsg);
+
+        uint256 userBefore = underlying.balanceOf(user);
+        bridge.release(unlockMsg, signatures);
+
+        assertEq(underlying.balanceOf(user), userBefore + AMOUNT);
+        assertEq(underlying.balanceOf(address(bridge)), 0);
+        assertTrue(bridge.processedNonces(destChainId, burnNonce));
+    }
+
+    /**
+     * @notice Helper: deposit en SOURCE + release mint de `amount` a `to`.
+     */
+    function _lockAndMintTo(address to, uint256 amount) internal {
+        uint256 destChainId = 31_337;
+
+        vm.startPrank(user);
+        underlying.approve(address(bridge), amount);
+        bridge.deposit(address(underlying), amount, destChainId, to);
+        vm.stopPrank();
+
+        uint256 nonce = bridge.nextDepositNonce() - 1;
+        vm.chainId(destChainId);
+
+        BridgeMessage memory message = BridgeMessage({
+            sourceChainId: SOURCE_CHAIN_ID,
+            destinationChainId: destChainId,
+            nonce: nonce,
+            target: address(bridge),
+            recipient: to,
+            token: address(bridgeToken),
+            amount: amount
+        });
+
+        bytes[] memory signatures = new bytes[](1);
+        signatures[0] = _signBridgeMessage(RELAYER_PK, address(bridge), message);
+        bridge.release(message, signatures);
+    }
 }

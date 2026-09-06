@@ -20,7 +20,7 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 | ⚠️ Informativo (diseño / trust) | 3 |
 | ❌ Vulnerable | 0 |
 
-**Conclusión:** Sin vulnerabilidades SWC explotables en el alcance v1 (lock→mint, EIP-712 + umbral de relayers, `MessageRelay.execute`). Riesgos informativos: trust del set de relayers / owner (`Ownable2Step`), tokens fee-on-transfer / ERC-777 fuera de alcance, y `burn` aún stub (unlock inverso incompleto hasta fases posteriores).
+**Conclusión:** Sin vulnerabilidades SWC explotables en el alcance v1 (lock→mint, burn→unlock, EIP-712 + umbral de relayers, `MessageRelay.execute`). Riesgos informativos: trust del set de relayers / owner (`Ownable2Step`) y tokens fee-on-transfer / ERC-777 fuera de alcance.
 
 **Principios del suite verificados:**
 
@@ -91,7 +91,7 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 | Tema | Riesgo | Tratamiento v1 |
 |------|--------|----------------|
 | Set de relayers + umbral | Relayers coludidos pueden firmar releases falsos | `Ownable2Step` admin; umbral N-of-M; documentar trust |
-| `burn` stub | Flujo burn→unlock incompleto | Stub `ExecutionFailed`; fuera de fase 7 |
+| `burn` | Origen quema wrapped; destino unlock vía `release` | Implementado + `test_burn_e2e_unlockUnderlying` |
 | Tokens fee-on-transfer / ERC-777 | Accounting / callbacks inesperados | Fuera de alcance v1; mocks ERC-20 honestos + attack token solo para reentrancy |
 
 ### Superficie MessageRelay
@@ -109,10 +109,10 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 | SafeERC20 | ✅ | lock + unlock |
 | EIP-712 domain | ✅ | Bridge `CrossChainBridge`/`1`; Relay `MessageRelay`/`1` |
 | Anti-replay | ✅ | chainIds + nonce + target en hash |
-| NatSpec públicas/externas | Parcial | Completar en fase 8 |
+| NatSpec públicas/externas | ✅ | Fase 8 |
 | Fuzz ≥ 1000 runs | ✅ | `test/fuzz/Bridge.fuzz.t.sol` |
 | Suite `test/attack/` | ✅ | Reentrancy · RelayReentrancy · TargetSpoof · SignatureReplay |
-| Gas baseline | ⬜ | Fase 8 (`GAS.md` + snapshot) |
+| Gas baseline | ✅ | `doc/GAS.md` + `.gas-snapshot` |
 
 ---
 
@@ -130,8 +130,8 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 
 | # | Observación | Severidad | Acción sugerida |
 |---|-------------|-----------|-----------------|
-| 1 | `burn` stub | Info | Completar burn→unlock |
-| 2 | NatSpec / gas snapshot | Info | Fase 8 |
+| 1 | ~~`burn` stub~~ | Resuelto | `burn` + e2e unlock |
+| 2 | ~~NatSpec / gas snapshot~~ | Resuelto F8 | `GAS.md` + `.gas-snapshot` + Deploy |
 | 3 | Trust de relayers | Info (diseño) | Multisig / rotación documentada |
 | 4 | Loop de firmas sin cap duro | Info | Caller paga gas; opcional `maxSignatures` |
 
@@ -168,7 +168,7 @@ ReentrancyAttackTest          2 PASS
 RelayReentrancyAttackTest     1 PASS
 TargetSpoofAttackTest         4 PASS
 SignatureReplayAttackTest     2 PASS
-Total: 43 PASS / 0 FAIL / 0 SKIP
+Total: 51 PASS / 0 FAIL / 0 SKIP
 ```
 
 ---

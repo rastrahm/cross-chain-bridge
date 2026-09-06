@@ -47,7 +47,7 @@ contract BridgeHashTest is Test {
             )
         );
 
-        assertEq(BridgeHash.hash(message), expected);
+        assertEq(BridgeHash.hashMemory(message), expected);
     }
 
     /**
@@ -73,7 +73,7 @@ contract BridgeHashTest is Test {
             amount: 1 ether
         });
 
-        assertTrue(BridgeHash.hash(a) != BridgeHash.hash(b));
+        assertTrue(BridgeHash.hashMemory(a) != BridgeHash.hashMemory(b));
     }
 
     /**
@@ -99,7 +99,7 @@ contract BridgeHashTest is Test {
             amount: 1 ether
         });
 
-        assertTrue(BridgeHash.hash(a) != BridgeHash.hash(b));
+        assertTrue(BridgeHash.hashMemory(a) != BridgeHash.hashMemory(b));
     }
 
     /**
@@ -125,6 +125,6 @@ contract BridgeHashTest is Test {
             )
         );
 
-        assertEq(BridgeHash.hash(message), expected);
+        assertEq(BridgeHash.hashMemory(message), expected);
     }
 }
