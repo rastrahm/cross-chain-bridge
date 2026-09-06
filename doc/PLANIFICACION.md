@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–5** ✅ (firmas inválidas). Fases 6–8 pendientes de autorización.
+**Estado:** Fases **0–6** ✅ (N-of-M + MessageRelay). Fases 7–8 pendientes de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -226,7 +226,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 | **3** | `release` con 1 relayer + `vm.sign` e2e | ✅ |
 | **4** | Replay: mismo nonce / otro `chainId` → revert | ✅ |
 | **5** | Firmas inválidas / tamper / v,r,s malformados | ✅ |
-| **6** | Umbral N-of-M + `MessageRelay.execute` | ⬜ |
+| **6** | Umbral N-of-M + `MessageRelay.execute` | ✅ |
 | **7** | Fuzz amounts, chainIds, nonces (`bound`) | ⬜ |
 | **8** | Gas snapshot + NatSpec + `Deploy.s.sol` | ⬜ |
 
