@@ -1,6 +1,6 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
-**Estado:** Fases **0–4** ✅ (anti-replay). Fases 5–8 pendientes de autorización.
+**Estado:** Fases **0–5** ✅ (firmas inválidas). Fases 6–8 pendientes de autorización.
 
 ## 1. Objetivo del proyecto
 
@@ -225,7 +225,7 @@ Orden CEI: marcar nonce **antes** de la interacción externa (mint/transfer).
 | **2** | `BridgeToken` + `Bridge.deposit` / lock mínimo | ✅ |
 | **3** | `release` con 1 relayer + `vm.sign` e2e | ✅ |
 | **4** | Replay: mismo nonce / otro `chainId` → revert | ✅ |
-| **5** | Firmas inválidas / tamper / v,r,s malformados | ⬜ |
+| **5** | Firmas inválidas / tamper / v,r,s malformados | ✅ |
 | **6** | Umbral N-of-M + `MessageRelay.execute` | ⬜ |
 | **7** | Fuzz amounts, chainIds, nonces (`bound`) | ⬜ |
 | **8** | Gas snapshot + NatSpec + `Deploy.s.sol` | ⬜ |
@@ -257,7 +257,7 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 - [x] Umbral de relayers antes de mint/unlock
 - [x] `ReentrancyGuard` / CEI en deposit, burn, release
 - [x] Test e2e con `vm.sign`
-- [ ] Tests de replay y firma inválida con `vm.expectRevert`
+- [x] Tests de replay y firma inválida con `vm.expectRevert`
 - [ ] Fuzz de amounts, chain IDs y nonces
 - [ ] NatSpec en funciones public/external
 - [ ] CEI + SafeERC20; sin `transfer`/`send` de ETH
