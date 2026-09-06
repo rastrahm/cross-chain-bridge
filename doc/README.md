@@ -9,8 +9,9 @@
 | [diagrama-flujo.md](./diagrama-flujo.md) | Flujos lock/burn → firma → mint/unlock |
 | [flujograma.md](./flujograma.md) | Operativo, anti-replay, pipeline TDD |
 
-**Estado:** Fase **0** ✅ (scaffold + interfaces). Pendiente autorización fase 1.
+**Estado:** Fases **0–1** ✅. Pendiente autorización fase 2 (`BridgeToken` + `deposit`).
 
-**Entregado en fase 0:** `IBridge` · `IMessageRelay` · `IBridgeToken` · `BridgeHash` · `MockERC20`  
-**Pendiente:** `Bridge` · `BridgeToken` · `MessageRelay` · tests  
-**Estándar crypto:** ECDSA + EIP-712 · **Tests:** unit, replay, firmas inválidas, fuzz
+**Entregado:** interfaces · `BridgeHash` · `MockERC20` · tests TDD  
+**Rojo esperado:** `forge test` no compila hasta existir `src/Bridge.sol` y `src/BridgeToken.sol`  
+**Verde parcial:** `BridgeHash.t.sol` — 4 PASS (aislado)  
+**Estándar crypto:** ECDSA + EIP-712
