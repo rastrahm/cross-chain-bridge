@@ -2,7 +2,7 @@
 
 Puente de tokens cross-chain y relé de mensajes con pruebas **ECDSA + EIP-712**, anti-replay y nonces. Solidity `0.8.24` + Foundry.
 
-**Estado:** Fases **0–6** ✅ (N-of-M + MessageRelay). Fases 7–8 pendientes de autorización.
+**Estado:** Fases **0–7** ✅ (fuzz + attack + SWC-AUDIT). Fase 8 pendiente de autorización.
 
 ---
 
@@ -56,5 +56,9 @@ src/
 
 ```shell
 forge test
-# 28 PASS (Bridge + BridgeHash + Replay + InvalidSignature + MessageRelay)
+# 43 PASS (unit + Replay + InvalidSignature + MessageRelay + fuzz + attack)
 ```
+
+### Seguridad
+
+Ver [`doc/SWC-AUDIT.md`](./doc/SWC-AUDIT.md) (matriz SWC-100–136 + `test/attack/`).
