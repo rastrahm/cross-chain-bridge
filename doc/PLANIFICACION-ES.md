@@ -1,5 +1,7 @@
 # Planificación — Module 09: Cross-Chain Bridge & Message Relay
 
+🌐 **Español** · [English](./PLANIFICACION-EN.md)
+
 **Estado:** Fases **0–8** ✅ — módulo cerrado (gas + NatSpec + Deploy + optimización).
 
 ## 1. Objetivo del proyecto
@@ -62,11 +64,13 @@ Construir un **puente de tokens cross-chain** y un **relayer de mensajes** segur
 ```
 09-cross-chain-bridge/
 ├── doc/
-│   ├── README.md
-│   ├── PLANIFICACION.md
-│   ├── diagrama-clases.md
-│   ├── diagrama-flujo.md
-│   └── flujograma.md
+│   ├── README.md                         # índice de idiomas
+│   ├── README-ES.md / README-EN.md
+│   ├── PLANIFICACION-ES.md / -EN.md
+│   ├── diagrama-clases-ES.md / -EN.md
+│   ├── diagrama-flujo-ES.md / -EN.md
+│   ├── flujograma-ES.md / -EN.md
+│   └── …                                 # GAS, SWC-AUDIT, GUIA-TECNICA, DEPLOY-TESTNET, SOCIAL (-ES / -EN)
 ├── src/
 │   ├── Bridge.sol                        # lock/burn + mint/unlock + nonces
 │   ├── MessageRelay.sol                  # ejecución de mensajes genéricos firmados
@@ -261,7 +265,7 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 - [x] Fuzz de amounts, chain IDs y nonces
 - [x] NatSpec en funciones public/external
 - [x] CEI + SafeERC20; sin `transfer`/`send` de ETH
-- [x] Gas baseline (`doc/GAS.md` + `.gas-snapshot`)
+- [x] Gas baseline (`doc/GAS-ES.md` + `.gas-snapshot`)
 - [x] `script/Deploy.s.sol` para Anvil
 - [x] Suite SWC / `test/attack/` + fuzz ≥ 1000
 
@@ -271,11 +275,11 @@ Invariante: un `release` exitoso marca el nonce; un segundo intento con la misma
 
 | Documento | Contenido |
 |-----------|-----------|
-| [diagrama-clases.md](./diagrama-clases.md) | UML contratos, interfaces, tests |
-| [diagrama-flujo.md](./diagrama-flujo.md) | Secuencia lock/burn → firma → mint/unlock |
-| [flujograma.md](./flujograma.md) | Operativo, anti-replay, TDD |
-| [SWC-AUDIT.md](./SWC-AUDIT.md) | Matriz SWC-100–136 + mapeo a tests |
-| [GAS.md](./GAS.md) | Baseline gas, optimizaciones, snapshot |
+| [diagrama-clases-ES.md](./diagrama-clases-ES.md) | UML contratos, interfaces, tests |
+| [diagrama-flujo-ES.md](./diagrama-flujo-ES.md) | Secuencia lock/burn → firma → mint/unlock |
+| [flujograma-ES.md](./flujograma-ES.md) | Operativo, anti-replay, TDD |
+| [SWC-AUDIT-ES.md](./SWC-AUDIT-ES.md) | Matriz SWC-100–136 + mapeo a tests |
+| [GAS-ES.md](./GAS-ES.md) | Baseline gas, optimizaciones, snapshot |
 
 ---
 

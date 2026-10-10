@@ -1,5 +1,7 @@
 # Auditoría SWC — Cross-Chain Bridge & Message Relay
 
+🌐 **Español** · [English](./SWC-AUDIT-EN.md)
+
 Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registry](https://swcregistry.io/) (EIP-1470) y principios del monorepo (custom errors, `ReentrancyGuard`, SafeERC20, EIP-712 / ECDSA, anti-replay).
 
 > **Nota:** El SWC Registry no se mantiene activamente desde ~2020. Complementar con [SCSVS](https://github.com/ComposableSecurity/SCSVS) y [EEA EthTrust](https://entethalliance.org/specs/ethtrust/).
@@ -8,7 +10,7 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 **Mocks (fuera de prod):** `src/mocks/MockERC20.sol`, `src/mocks/MockRelayTarget.sol`  
 **Fecha:** 2026-09-06  
 **Referencia tests:** `test/Bridge.t.sol`, `test/Replay.t.sol`, `test/InvalidSignature.t.sol`, `test/MessageRelay.t.sol`, `test/attack/`, `test/fuzz/`  
-**Estilo:** alineado a [`08-flash-loans/doc/SWC-AUDIT.md`](../../08-flash-loans/doc/SWC-AUDIT.md)
+**Estilo:** alineado a [`08-flash-loans/doc/SWC-AUDIT-ES.md`](../../08-flash-loans/doc/SWC-AUDIT-ES.md)
 
 ---
 
@@ -112,7 +114,7 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 | NatSpec públicas/externas | ✅ | Fase 8 |
 | Fuzz ≥ 1000 runs | ✅ | `test/fuzz/Bridge.fuzz.t.sol` |
 | Suite `test/attack/` | ✅ | Reentrancy · RelayReentrancy · TargetSpoof · SignatureReplay |
-| Gas baseline | ✅ | `doc/GAS.md` + `.gas-snapshot` |
+| Gas baseline | ✅ | `doc/GAS-ES.md` + `.gas-snapshot` |
 
 ---
 
@@ -131,7 +133,7 @@ Verificación de `Bridge`, `MessageRelay` y `BridgeToken` contra el [SWC Registr
 | # | Observación | Severidad | Acción sugerida |
 |---|-------------|-----------|-----------------|
 | 1 | ~~`burn` stub~~ | Resuelto | `burn` + e2e unlock |
-| 2 | ~~NatSpec / gas snapshot~~ | Resuelto F8 | `GAS.md` + `.gas-snapshot` + Deploy |
+| 2 | ~~NatSpec / gas snapshot~~ | Resuelto F8 | `GAS-ES.md` + `.gas-snapshot` + Deploy |
 | 3 | Trust de relayers | Info (diseño) | Multisig / rotación documentada |
 | 4 | Loop de firmas sin cap duro | Info | Caller paga gas; opcional `maxSignatures` |
 
@@ -178,5 +180,5 @@ Total: 51 PASS / 0 FAIL / 0 SKIP
 - [SWC Registry](https://swcregistry.io/)
 - [EIP-1470](https://eips.ethereum.org/EIPS/eip-1470)
 - [EIP-712](https://eips.ethereum.org/EIPS/eip-712)
-- Módulo 08: [`08-flash-loans/doc/SWC-AUDIT.md`](../../08-flash-loans/doc/SWC-AUDIT.md)
-- Plan: [`PLANIFICACION.md`](./PLANIFICACION.md)
+- Módulo 08: [`08-flash-loans/doc/SWC-AUDIT-ES.md`](../../08-flash-loans/doc/SWC-AUDIT-ES.md)
+- Plan: [`PLANIFICACION-ES.md`](./PLANIFICACION-ES.md)

@@ -12,7 +12,7 @@ import {EIP712BridgeHelper} from "../helpers/EIP712BridgeHelper.sol";
 
 /**
  * @title BridgeGasTest
- * @notice Baseline de gas para `forge snapshot` y `doc/GAS.md` (Fase 8).
+ * @notice Baseline de gas para `forge snapshot` y `doc/GAS-ES.md` / `doc/GAS-EN.md` (Fase 8).
  */
 contract BridgeGasTest is EIP712BridgeHelper {
     uint256 internal constant RELAYER_PK = 0xA11CE;

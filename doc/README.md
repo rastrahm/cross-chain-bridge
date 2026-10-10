@@ -1,18 +1,17 @@
-# Documentación — Module 09: Cross-Chain Bridge & Message Relay
+# Documentación / Documentation — Module 09
 
-Índice de la carpeta `doc/`. **Proyecto completo** (contratos + seguridad + gas).
+🌐 [Español](./README-ES.md) · [English](./README-EN.md)
 
-| Documento | Contenido |
-|-----------|-----------|
-| [PLANIFICACION.md](./PLANIFICACION.md) | Objetivo, alcance, fases TDD, criterios |
-| [SWC-AUDIT.md](./SWC-AUDIT.md) | Matriz SWC-100–136, mapeo a tests |
-| [GAS.md](./GAS.md) | Baseline gas, optimizaciones, snapshot |
-| [SOCIAL.md](./SOCIAL.md) | Borradores LinkedIn / X |
-| [diagrama-clases.md](./diagrama-clases.md) | UML: Bridge, Token, Relayer, EIP-712, tests |
-| [diagrama-flujo.md](./diagrama-flujo.md) | Flujos lock/burn → firma → mint/unlock |
-| [flujograma.md](./flujograma.md) | Operativo, anti-replay, pipeline TDD |
+| Documento / Document | Español | English |
+|----------------------|---------|---------|
+| Planificación / Planning | [PLANIFICACION-ES.md](./PLANIFICACION-ES.md) | [PLANIFICACION-EN.md](./PLANIFICACION-EN.md) |
+| Diagrama de clases / Class diagram | [diagrama-clases-ES.md](./diagrama-clases-ES.md) | [diagrama-clases-EN.md](./diagrama-clases-EN.md) |
+| Diagrama de flujo / Flow diagram | [diagrama-flujo-ES.md](./diagrama-flujo-ES.md) | [diagrama-flujo-EN.md](./diagrama-flujo-EN.md) |
+| Flujograma / Flowchart | [flujograma-ES.md](./flujograma-ES.md) | [flujograma-EN.md](./flujograma-EN.md) |
+| Guía técnica / Technical guide | [GUIA-TECNICA-ES.md](./GUIA-TECNICA-ES.md) | [GUIA-TECNICA-EN.md](./GUIA-TECNICA-EN.md) |
+| Gas | [GAS-ES.md](./GAS-ES.md) | [GAS-EN.md](./GAS-EN.md) |
+| Auditoría SWC / SWC audit | [SWC-AUDIT-ES.md](./SWC-AUDIT-ES.md) | [SWC-AUDIT-EN.md](./SWC-AUDIT-EN.md) |
+| Deploy en testnet / Testnet deploy | [DEPLOY-TESTNET-ES.md](./DEPLOY-TESTNET-ES.md) | [DEPLOY-TESTNET-EN.md](./DEPLOY-TESTNET-EN.md) |
+| Redes sociales / Social posts | [SOCIAL-ES.md](./SOCIAL-ES.md) | [SOCIAL-EN.md](./SOCIAL-EN.md) |
 
-**Estado:** Fases **0–8** ✅ (módulo cerrado).
-
-**Contratos:** `Bridge` · `MessageRelay` · `BridgeToken` · `BridgeHash` · `NonceBitmap` · `RelayerSig`  
-**Estándar crypto:** ECDSA + EIP-712 · **Tests:** `forge test` → **51 PASS**
+← [README principal / Main README](../README.md)

@@ -1,5 +1,7 @@
 # Flujograma del proyecto — Cross-Chain Bridge & Message Relay
 
+🌐 **Español** · [English](./flujograma-EN.md)
+
 Flujograma operativo **to-be** (v1): setup → deposit/burn → firma → release → anti-replay → seguridad → TDD.
 
 ## 1. Flujograma maestro del sistema
