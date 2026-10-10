@@ -1,5 +1,7 @@
 # Optimización de gas — Cross-Chain Bridge & Message Relay
 
+🌐 **Español** · [English](./GAS-EN.md)
+
 Regenerar:
 
 ```bash
@@ -84,4 +86,4 @@ Las optimizaciones **no** debilitan CEI / `nonReentrant` / anti-replay:
 
 - El bitmap marca el nonce **antes** de mint/`call` (mismo orden CEI).
 - `RelayerSig` sigue exigiendo firmantes `isRelayer` y umbral.
-- Ver [`SWC-AUDIT.md`](./SWC-AUDIT.md).
+- Ver [`SWC-AUDIT-ES.md`](./SWC-AUDIT-ES.md).

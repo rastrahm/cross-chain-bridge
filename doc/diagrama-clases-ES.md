@@ -1,5 +1,7 @@
 # Diagrama de clases — Cross-Chain Bridge & Message Relay
 
+🌐 **Español** · [English](./diagrama-clases-EN.md)
+
 Modelo estructural **to-be** (módulo 09). Contratos, interfaces EIP-712/ECDSA, tokens y tests.
 
 ## 1. Diagrama principal (UML / Mermaid)

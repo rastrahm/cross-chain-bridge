@@ -1,5 +1,7 @@
 # Borradores redes — Cross-Chain Bridge & Message Relay (módulo 09)
 
+🌐 **Español** · [English](./SOCIAL-EN.md)
+
 Links:
 
 - **GitHub:** https://github.com/rastrahm/cross-chain-bridge  
@@ -24,7 +26,7 @@ Qué quedó adentro:
 - `MessageRelay` para ejecutar calldata firmado en destino  
 - Unit, replay, firmas inválidas, fuzz (1000), gas snapshot… y `test/attack/` (reentrancy, spoof de target, replay de firma)
 
-También dejé planificación, diagramas, auditoría SWC y `doc/GAS.md`, porque si no documentás el puente, después nadie confía en el diseño.
+También dejé planificación, diagramas, auditoría SWC y `doc/GAS-ES.md`, porque si no documentás el puente, después nadie confía en el diseño.
 
 Código (mismo proyecto en ambos lados):
 
@@ -32,6 +34,36 @@ GitHub → https://github.com/rastrahm/cross-chain-bridge
 GitLab → https://gitlab.com/rastrahm/cross-chain-bridge  
 
 Si te interesa, ¿qué preferís que desarrolle en un próximo post: el dominio EIP-712 anti-replay, el umbral de relayers, o cómo armé los ataques de firma?
+
+\#Solidity \#Foundry \#Web3 \#Bridge \#EIP712 \#CrossChain \#SmartContracts \#Ethereum \#OpenZeppelin \#DeFi
+
+---
+
+## LinkedIn (English)
+
+Finally, 5 free minutes, so I'm picking the translation back up.
+
+I wrapped up module 09 of my smart contracts suite: a **cross-chain bridge + message relay** built with Solidity 0.8.24 and Foundry.
+
+The part I cared about most wasn't "burn here, mint there". It was making sure a valid signature **can't be reused** on another chain, with another nonce, or against the wrong contract.
+
+What's inside:
+
+- Lock → mint and burn → unlock, with a `BridgeToken` that only the bridge can control  
+- EIP-712 + ECDSA proofs (OpenZeppelin) and an N-of-M relayer threshold  
+- Anti-replay: `sourceChainId`, `destinationChainId`, `nonce` and `target` inside the typed hash  
+- Nonce bitmap (256 per slot) + a fast path when the threshold is 1 (clear savings on back-to-back releases)  
+- `MessageRelay` to execute signed calldata on the destination chain  
+- Unit, replay, invalid-signature, fuzz (1000 runs) and gas snapshot tests… plus `test/attack/` (reentrancy, target spoofing, signature replay)
+
+I also included the planning, diagrams, an SWC audit and `doc/GAS-EN.md`, because if you don't document a bridge, nobody ends up trusting the design.
+
+Code (same project on both platforms):
+
+GitHub → https://github.com/rastrahm/cross-chain-bridge  
+GitLab → https://gitlab.com/rastrahm/cross-chain-bridge  
+
+If you're interested, what should I cover in a future post: the anti-replay EIP-712 domain, the relayer threshold, or how I built the signature attacks?
 
 \#Solidity \#Foundry \#Web3 \#Bridge \#EIP712 \#CrossChain \#SmartContracts \#Ethereum \#OpenZeppelin \#DeFi
 
